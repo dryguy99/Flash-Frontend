@@ -138,7 +138,7 @@ button.mygame {
 	margin-top: 3vw;
 	margin-left: 30vw;
 }
-ng-style {
-	color: red;
-	font-size: 3vw;
+.myngstyle {
+	color: #0052cc;
+	font-size: 2vw;
 }

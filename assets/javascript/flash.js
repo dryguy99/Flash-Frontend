@@ -100,6 +100,8 @@ function prepareGame () {
 }
 function resetmakeCards () {
 	$('#choices').css("display", "none");
+	$('#success').css("display", "none");
+	$('#stats').css("display", "none");
 	$('.setup').css("display", "block");
 	$('.mygame').css("display", "none");
 	$('#basicbtn').attr("data-selected", "true");
