@@ -1,0 +1,89 @@
+body {
+	margin: 0px auto;
+	width: 80vw;
+	background: url('../images/old_map.png');
+}
+#basic {
+	display: block;
+}
+
+#cloze {
+	display: none;
+}
+#game {
+	display: none;
+}
+label, input {
+	font-size: 2.2vw;
+}
+#frontb, #frontc {
+	width: 48vw;
+	background: #e6f2ff;
+}
+#backb, #backc {
+	width: 48.2vw;
+	background: #e6f2ff;
+}
+label, h4, p, h5 {
+	margin-left: 6.5vw;
+}
+h1 {
+	font-family: 'Kanit', sans-serif;
+	font-size: 6vw;
+	font-weight: 700;
+	letter-spacing: 0.4vw;
+}
+.myform {
+	background: blue;
+	color: white;
+	font-size: 1.8vw;
+	padding: 1vw;
+	border-radius: 4vw;
+}
+button.mybtn {
+	background: #5c00e6;
+	color: white;
+	font-size: 1.6vw;
+	padding: 0.9vw;
+	border-radius: 4vw;
+}
+.mybtn[data-selected="true"] {
+	background: #cc7a00;
+	color: white;
+	font-size: 1.6vw;
+	padding: 0.9vw;
+	border-radius: 4vw;
+}
+.mybtn[data-selected="false"] {
+	background: green;
+	color: white;
+	font-size: 1.6vw;
+	padding: 0.9vw;
+	border-radius: 4vw;
+}
+.bold {
+	font-size: 2.5vw;
+	font-weight: 800;
+}
+button:focus {
+	outline: none;
+}
+
+p, h5 {
+	font-size: 1.7vw;
+}
+h3 {
+	font-size: 1.9vw;
+}
+h4 {
+	font-weight: 700;
+	font-size: 1.7vw;
+}
+#clozeerror {
+	display: none;
+	background: #ffffb3;
+}
+#basicerror {
+	display: none;
+	background: #ffffb3;
+}
