@@ -87,3 +87,58 @@ h4 {
 	display: none;
 	background: #ffffb3;
 }
+
+.ans {
+	float: left;
+	display: inline;
+	font-size: 1.9vw;
+}
+h3.game {
+	font-family: 'Sintony', sans-serif;
+	color: #663300;
+	font-size: 2.4vw;
+	font-weight: 800;
+}
+.mygame {
+	display: none;
+}
+input.ans {
+	background: #e6f2ff
+}
+label.ans {
+	margin-left: 15vw;
+}
+label.ans, input.ans {
+	margin-top: 0.7vw;
+}
+button.mygame {
+	background: #cc0000;
+	color: white;
+	font-size: 1.6vw;
+	padding: 0.9vw;
+	border-radius: 4vw;
+}
+#success{
+	clear: left;
+	font-family: 'Sintony', sans-serif;
+	color: #663300;
+	font-size: 2.4vw;
+	font-weight: 800;
+}
+#stats {
+	lear: left;
+	font-family: 'Sintony', sans-serif;
+	color: #663300;
+	font-size: 2.4vw;
+	font-weight: 800;
+}
+#reset {
+	clear: left;
+	background: #994d00;
+	margin-top: 3vw;
+	margin-left: 30vw;
+}
+ng-style {
+	color: red;
+	font-size: 3vw;
+}
