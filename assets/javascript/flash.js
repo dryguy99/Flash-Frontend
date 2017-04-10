@@ -24,10 +24,10 @@ function runendGame () {
 				endsaying = "Not bad...<br> Maybe you should use the cards again?";
 			}
 			else { 
-				endsaying = "I beleive you need to practice some more...<br>(click a purple button above)<br>";
+				endsaying = "I beleive you need to practice some more...<br><span id='purple'>(click a purple button above)</span><br>";
 			}
 	$('#success').prepend("<span class='endsaying'>GAME OVER!</span>");
-	$('#success').prepend("<span class='endsaying'>" + endsaying + "</span>" );
+	$('#success').prepend("<span class='endsaying'>" + endsaying + "</span><br>" );
 	$('#success').prepend("<span class='endsaying'>You corrctly answered " + percentR + " % of the questions.</span><br>");
 	$('#choices').css('display', 'block');
 	gType = "";
