@@ -221,7 +221,12 @@ $(document).ready(function(){
 		switch (btn) {
 			case "answer":
 				var answer = $('#myans').val().trim();
-				checkAnswer(answer);
+				if (answer.length > 2) {
+					$('#basicerror1').css('display', 'none');
+					checkAnswer(answer); 
+				} else {
+					$('#basicerror1').css('display', 'block');
+				}
 				break;
 			case "reset":
 				resetmakeCards();
@@ -243,7 +248,7 @@ $(document).ready(function(){
 				var back = $("#backc").val().trim();	
 		}
 		
-		if (front === "" || back === "" || front.length > 128 || back.length > 50) {
+		if (front === "" || back === "" || front.length > 128 || back.length > 50 || back.length < 3) {
 			if (cardType === "basic") {
 				$('#basicerror').css("display", "block");
 			} else {
