@@ -21,7 +21,7 @@
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<h1> Flash Card Machine</h1>
-				<h3 class='setup'>Use the buttons and forms below to make: </h3>
+				<h3 class='setup'>Use the buttons and forms below to make<br>2 Tyes of US History Flashcards: </h3>
 				<h3 class='setup'><span class="bold">Basic</span> flashcards with questions on one side and answers on the other.<br>
 				 <span class="bold">Cloze</span> flashcards, with a key portion - the answer,<br>removed and placed on the back.</h3>
 			</div>
@@ -44,12 +44,12 @@
 						<h3 id="basicerror" class="text-center">Please complete both fields and resubmit.</h3>
 				         <fieldset>
 				            <label for="front">Front of Card:</label>
-				            <input ng-model="frontb" type="text" id="frontb" name="frontb" placeholder="Enter the Question for the Front" /><span class="myngstyle"> {{100 - frontb.length}} </span>
+				            <input ng-model="frontb" type="text" id="frontb" name="frontb" placeholder="Enter the Question for the Front" /><span class="myngstyle"> {{128 - frontb.length}} </span>
 				            <br />
 				            <label for="back">Back of Card:</label>
 				            <input ng-model="backb" type="text" id="backb" name="backb" placeholder="Enter the Answer for the Back" /><span class="myngstyle"> {{50 - backb.length}} </span>
 				            <br />
-				            <div class="response">
+				            <div class="response text-center">
 				            </div>
 				            <h4> Example:</h4>
 				            <p>Front: Who was the first President of the United States?<br>Back: George Washington</p>
@@ -65,7 +65,7 @@
 				         <h3 id="clozeerror" class="text-center"></h3>
 				         <fieldset>
 				            <label for="front">Front of Card:</label>
-				            <input ng-model="frontc" type="text" id="frontc" name="frontc" placeholder="Enter the statement for the Front" /><span class="myngstyle"> {{100 - frontc.length}} </span>
+				            <input ng-model="frontc" type="text" id="frontc" name="frontc" placeholder="Enter the statement for the Front" /><span class="myngstyle"> {{128 - frontc.length}} </span>
 				            <br />
 				            <label for="back">Back of Card:</label>
 				            <input ng-model="backc" type="text" id="backc" name="backc" placeholder="Enter the text to remove from the statement" /><span class="myngstyle"> {{50 - backc.length}} </span>

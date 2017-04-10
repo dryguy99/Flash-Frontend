@@ -126,7 +126,7 @@ button.mygame {
 	font-weight: 800;
 }
 #stats {
-	lear: left;
+	clear: left;
 	font-family: 'Sintony', sans-serif;
 	color: #663300;
 	font-size: 2.4vw;
@@ -141,4 +141,8 @@ button.mygame {
 .myngstyle {
 	color: #0052cc;
 	font-size: 2vw;
+}
+.response {
+	display: none;
+	color: #002db3;
 }

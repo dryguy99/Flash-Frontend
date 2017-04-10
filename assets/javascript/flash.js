@@ -1,10 +1,13 @@
 
-//var myurl = "https://immense-reaches-83300.herokuapp.com/api";
-var myurl = "http://localhost:8080/api";
+var myurl = "https://immense-reaches-83300.herokuapp.com/api";
+//var myurl = "http://localhost:8080/api";
 var mygameTemp = [];
 var mydeck = [];
 var wincount = 0;
 var losscount = 0;
+var response = false;
+var qCount = 0;
+var gType = "";
 $('#basic').css("display", "block");
 $('#cloze').css("display", "none");
 $('#game').css("display", "none");
@@ -15,9 +18,12 @@ function runendGame () {
 	$('#playgame').html("<h3 class='text-centered'>You've played all the cards!<br>Would you like to play again?<br>Choose ABOVE or click Reset to go back to the machine.</h3>");
 	$('#success').prepend("GAME OVER!");
 	$('#choices').css('display', 'block');
+	gType = "";
 	mydeck = [];
 	wincount = 0;
 	losscount = 0;
+	response = false;
+	qCount = 0;
 }
 //------------------------------------------------------------
 
@@ -26,49 +32,55 @@ function randomNum()  {
 }
 //------------------------------------------------------------
 
-function runGame(gtype) {
+function runGame() {
 	$('#choices').css('display', 'none');
 	$('.mygame').css('display', 'block');
 	var x = randomNum();
-	console.log (x);
-	if  (mydeck.length >= mygameTemp.length){
-		runendGame();	
-	} else if (mydeck.indexOf(x) === -1 && mydeck.length < mygameTemp.length) {
-		if (gtype === "cloze") {
+	if (mydeck.length <= mygameTemp.length) {
+		while (mydeck.indexOf(x) != -1) {
+			x = randomNum();
+		}
+		mydeck.push(x);
+		qCount--;
+		if (gType === "cloze") {
 				$('#playgame').html("<h3 class='game text-centered'>" + mygameTemp[x].cloze + "</h3>");
 				
 		} else {
 			$('#playgame').html("<h3 class='game text-centered'>" + mygameTemp[x].front + "</h3>");
-
 		} 
-		mydeck.push(x);
-	} else { runGame(); }
-	//runGame();
+	} else {
+		runendGame();
+	}
 }
 //------------------------------------------------------------
 // get deck from server
-function getItem(gtype) {
+function getItem(utype) {
 	
-	console.log(gtype);
         $.ajax({
             type: "GET",
             url: myurl,
             timeout: 4000,
-            data: { deck: gtype },
+            data: { deck: utype },
             success: function(data) {
                 //show content
-                console.log('Success!');
-                console.log(data);
-                
-                for (i=0; i<data.length; i++){
-                	console.log(data[i].front + " " + data[i].back);
-                }
+                //console.log('Success!');
+                // for (i=0; i<data.length; i++){
+                // 	console.log(data[i].front + " " + data[i].back);
+                // }
                 mygameTemp = data;
-                runGame(gtype);
+                qCount = mygameTemp.length;
+                runGame(utype);
             },
             error: function(jqXHR, textStatus, err) {
                 //show error message
-                console.log('text status '+ textStatus +', err '+err)
+                console.log('text status '+ textStatus +', err '+err);
+                if (err === "timeout") {
+                	console.log("waiting for server...");
+                	getItem(utype);
+                }
+                response = true;
+                $('.response').css('display', 'block');
+                $('.response').html("<h3 class='text-center'>Status: " + textStatus + ", Error: "+ err + "<br> Please contact System Admin.</h3>");
             }
         });
     }//getItem()
@@ -77,7 +89,6 @@ function getItem(gtype) {
 // post item to server
 function postItem(type, front, back) {
 	var urlTemp = myurl + "/"+ type + "?front="+ front + "&back=" + back;
-	console.log(urlTemp);
         $.ajax({
             type: "POST",
             url: urlTemp,
@@ -85,11 +96,21 @@ function postItem(type, front, back) {
             data: { front: front, back: back },
             success: function(data) {
                 //show content
-                console.log('Success!')
+                //console.log(JSON.stringify(data));
+                response = true;
+                $('.response').css('display', 'block');
+                $('.response').html("<h3 class='text-center'>Success: Card Created!</h3>");
             },
             error: function(jqXHR, textStatus, err) {
                 //show error message
-                console.log('text status '+textStatus+', err '+err)
+                console.log('text status '+textStatus+', err '+err);
+                if (err === "timeout") {
+                	console.log("waiting for server...");
+                	postItem(type, front, back);
+                }
+                response = true;
+                $('.response').css('display', 'block');
+                $('.response').html("<h3 class='text-center'>Status: " + textStatus + ", Error: "+ err + "<br> Please contact System Admin.</h3>");
             }
         });
     }//postItem()
@@ -97,6 +118,11 @@ function prepareGame () {
 	$('#choices').css("display", "none");
 	$('.setup').css("display", "none");
 	$('.mygame').css("display", "inline");
+	mydeck = [];
+	mygameTemp = [];
+	wincount = 0;
+	losscount = 0;
+	qCount = 0;
 }
 function resetmakeCards () {
 	$('#choices').css("display", "none");
@@ -108,40 +134,14 @@ function resetmakeCards () {
 	$('#gamebtn').attr("data-selected", "false");
 	$('#cloze').css("display", "none");
 	mydeck = [];
+	mygameTemp = [];
 	wincount = 0;
 	losscount = 0;
+	response = false;
+	qCount = 0;
+	gType = "";
 }
-//--------------------------------------------------------
-// set onclick event for 3 function buttons (basic, cloze, playgame)
-$(document).on('click', '.mybtn', function () {
-	event.preventDefault();
-	var mychoice = $(this).val();
-	var myid = "#" + mychoice;
-	var isSelected = $(this).attr("data-selected");
-	
-	if ((isSelected === "false") && (mychoice != 'gcloze') && (mychoice != 'gbasic')) {
-		
-		$(this).attr("data-selected", "true");
-		$(myid).css("display", "block");
-		$(this).siblings(".mybtn").attr("data-selected", "false");
-		$(myid).siblings().css("display", "none");
-		$("#mybutton").css("display", "block");
-	}
 
-	if (mychoice === 'game') {
-		$('#choices').css("display", "block");
-		$('#choices').html('<button class="mybtn" type="submit" value="gcloze">Play with Cloze Cards</button> Choose Your Deck. <button class="mybtn" type="submit" value="gbasic">Play with Basic Cards</button>');
-	}
-	// play with basic cards
-	if (mychoice === 'gbasic') {
-		prepareGame();
-		getItem('basic');
-	} // play with cloze cards
-	else if (mychoice === 'gcloze') {
-		prepareGame();
-		getItem('cloze');
-	}
-});
 //--------------------------------------------------------
 // clear the Basic Flashcard fields
 function clearBasic() {
@@ -162,7 +162,7 @@ function clearAnswer() {
 //--------------------------------------------------------
 // set interval timer
 function setTimer() {
-
+// future development, set up a timer to display a victory or fail animation
 }
 
 //--------------------------------------------------------
@@ -172,7 +172,8 @@ function mySuccess () {
 	$('#success').html("<h3 class='game text-center'> Correct! : \n" + mygameTemp[mydeck[mydeck.length-1]].back + "</h3>");
 	setTimer();
 	wincount++;
-	$('#stats').html("<h3 class='game text-center'>Correct Answers: " + wincount + " Incorrect Answers: " + losscount + "</h3>");
+	$('#stats').html("<h3 class='game text-center'>Correct: " + wincount + " - Incorrect: " + losscount + "</h3>");
+	$('#stats').append("<h3 class='game text-center'>There are " + qCount + " questions remaining.</h3>");
 	runGame();
 }
 //--------------------------------------------------------
@@ -182,7 +183,8 @@ function myFail () {
 	$('#success').html("<h3 class='game text-center'> SORRY, the correct answer is : \n" + mygameTemp[mydeck[mydeck.length-1]].back + "</h3>");
 	setTimer();
 	losscount++;
-	$('#stats').html("<h3 class='game text-center'>Correct Answers: " + wincount + " Incorrect Answers: " + losscount + "</h3>");
+	$('#stats').html("<h3 class='game text-center'>Correct: " + wincount + " - Incorrect: " + losscount + "</h3>");
+	$('#stats').append("<h3 class='game text-center'>There are " + qCount + " questions remaining.</h3>");
 	runGame();
 }
 //--------------------------------------------------------
@@ -191,59 +193,104 @@ function checkAnswer(answer) {
 	var check = answer.toLowerCase();
 	clearAnswer();
 	var theAnswer = mygameTemp[mydeck[mydeck.length-1]].back.toLowerCase();
-	console.log(check + " = " + theAnswer);
 	if (theAnswer === check) {
 		mySuccess();
 	} else { myFail(); }
 }
 
 //--------------------------------------------------------
-// set onclick event for answer and rest buttons
-$(document).on('click', '.ans', function () {
-	event.preventDefault();
-	var btn = $(this).val();
-	switch (btn) {
-		case "answer":
-			var answer = $('#myans').val();
-			checkAnswer(answer);
-			break;
-		case "reset":
-			resetmakeCards();
-			break;
-	}
-});
-//--------------------------------------------------------
-// set onclick event for submit Flashcard button and create cards
-$(document).on('click', '.myform', function () {
-	event.preventDefault();
-	var cardType = $(this).val();
-	switch (cardType){
-		case "basic":
-			var front = $("#frontb").val();
-			var back = $("#backb").val();
-			break;
-		case "cloze":
-			var front = $("#frontc").val();
-			var back = $("#backc").val();	
-	}
-	
-	if (front === "" || back === "" || front.length > 100 || back.length > 50) {
-		if (cardType === "basic") {
-			$('#basicerror').css("display", "block");
-		} else {
-			$('#clozeerror').css("display", "block");
-			$('#clozeerror').html('Please complete both fields and resubmit.');
+// once document is loaded set listners and run program
+$(document).ready(function(){
+	//--------------------------------------------------------
+	// set onclick event for answer and rest buttons
+	$(document).on('click', '.ans', function () {
+		event.preventDefault();
+		var btn = $(this).val();
+		switch (btn) {
+			case "answer":
+				var answer = $('#myans').val();
+				checkAnswer(answer);
+				break;
+			case "reset":
+				resetmakeCards();
+				break;
 		}
-	} else if (cardType === "cloze" && !(front.includes(back))) {
-		$('#clozeerror').css("display", "block");
-		$(clozeerror).html("The back needs to contain a phrase from the front.<br> Please check your spelling and capitalization and resubmit.");
-	} else{
-		$('#basicerror').css("display", "none");
-		$('#clozeerror').css("display", "none");
-		clearBasic();
-		clearCloze();
-		postItem(cardType, front, back);
-	}	
-    
-});
+	});
+	//--------------------------------------------------------
+	// set onclick event for submit Flashcard button and create cards
+	$(document).on('click', '.myform', function () {
+		event.preventDefault();
+		var cardType = $(this).val();
+		switch (cardType){
+			case "basic":
+				var front = $("#frontb").val();
+				var back = $("#backb").val();
+				break;
+			case "cloze":
+				var front = $("#frontc").val();
+				var back = $("#backc").val();	
+		}
+		
+		if (front === "" || back === "" || front.length > 128 || back.length > 50) {
+			if (cardType === "basic") {
+				$('#basicerror').css("display", "block");
+			} else {
+				$('#clozeerror').css("display", "block");
+				$('#clozeerror').html('Please complete both fields and resubmit.');
+			}
+		} else if (cardType === "cloze" && !(front.includes(back))) {
+			$('#clozeerror').css("display", "block");
+			$(clozeerror).html("The back needs to contain a phrase from the front.<br> Please check your spelling and capitalization and resubmit.");
+		} else{
+			$('#basicerror').css("display", "none");
+			$('#clozeerror').css("display", "none");
+			clearBasic();
+			clearCloze();
+			postItem(cardType, front, back);
+		}	
+	    
+	});
+	//--------------------------------------------------------
+	// turn off sussess or error response from server
+	$("input").keyup(function(){
+		if (response === true) {
+			response = false;
+	    	$('.response').css('display', 'none');
+	    }
+	});
+	//--------------------------------------------------------
+	// set onclick event for 3 main function buttons (basic, cloze, playgame)
+	// and check to see which game the user wants to play
+	$(document).on('click', '.mybtn', function () {
+		event.preventDefault();
+		var mychoice = $(this).val();
+		var myid = "#" + mychoice;
+		var isSelected = $(this).attr("data-selected");
+		
+		if ((isSelected === "false") && (mychoice != 'gcloze') && (mychoice != 'gbasic')) {
+			
+			$(this).attr("data-selected", "true");
+			$(myid).css("display", "block");
+			$(this).siblings(".mybtn").attr("data-selected", "false");
+			$(myid).siblings().css("display", "none");
+			$("#mybutton").css("display", "block");
+		}
 
+		if (mychoice === 'game') {
+			$('#choices').css("display", "block");
+			$('#choices').html('<button class="mybtn" type="submit" value="gcloze">Play with Cloze Cards</button> Choose Your Deck. <button class="mybtn" type="submit" value="gbasic">Play with Basic Cards</button>');
+		}
+		// play with basic cards
+		if (mychoice === 'gbasic') {
+			gType = 'basic';
+			prepareGame();
+			getItem(gType);
+		} // play with cloze cards
+		else if (mychoice === 'gcloze') {
+			gType = 'cloze';
+			prepareGame();
+			getItem(gType);
+		}
+	});
+
+}); // end program
