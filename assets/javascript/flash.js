@@ -217,10 +217,10 @@ $(document).ready(function(){
 	// set onclick event for answer and rest buttons
 	$(document).on('click', '.ans', function () {
 		event.preventDefault();
-		var btn = $(this).val();
+		var btn = $(this).val().trim();
 		switch (btn) {
 			case "answer":
-				var answer = $('#myans').val();
+				var answer = $('#myans').val().trim();
 				checkAnswer(answer);
 				break;
 			case "reset":
@@ -235,12 +235,12 @@ $(document).ready(function(){
 		var cardType = $(this).val();
 		switch (cardType){
 			case "basic":
-				var front = $("#frontb").val();
-				var back = $("#backb").val();
+				var front = $("#frontb").val().trim();
+				var back = $("#backb").val().trim();
 				break;
 			case "cloze":
-				var front = $("#frontc").val();
-				var back = $("#backc").val();	
+				var front = $("#frontc").val().trim();
+				var back = $("#backc").val().trim();	
 		}
 		
 		if (front === "" || back === "" || front.length > 128 || back.length > 50) {
