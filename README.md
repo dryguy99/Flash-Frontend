@@ -1,13 +1,13 @@
 # Flash-Frontend
-The front web app is designed as a front end for my server to make and play with flashcards.
+The Flash-Frontend web app is designed as a front end to access my api server for the purpose of making and playing with flashcards.
 
-This app uses my api on a server I created using Node.js at https://immense-reaches-83300.herokuapp.com/ .
+This app uses my api on a server I created using Node.js at https://immense-reaches-83300.herokuapp.com/ .  Without the api the app will not function.
 
 The purpose of this app is to create and use flashcards.  Currently it only holds one set of cards on the topic US History.  I plan to add the ability to add more topics for flashcards in the future.  The user may add their own cards to the database in either a 'basic' format or a 'cloze' format. 
 
 In the Basic format the flashcard is entered with a question to appear (front) and an answer for the question (back). The user is limited to inputing a maximum of 128 characters for the question (front) and 50 characters (back) for the answer.  There is a counter on the right side of the input box to let the user know how many chacters are left.  During gameplay the app will display the question and compare the user input to the answer.  All text is converted to lower case for the compare so capitalization doesn't matter, but spelling does.  The results are then displayed on the screen with the correct answer and the next question.
 
-In the Cloze format the flashcard is entered with a statement of fact (front) and the key fact from the statement (back). he user is limited to inputing a maximum of 128 characters for the question (front) and 50 characters (back) for the answer.  There is a counter on the right side of the input box to let the user know how many chacters are left.  Before the information is stored in the database the server adds a third column of cloze to the dataset.  The cloze format is created by replacing the key fact with "..." . During gameplay the cloze statement is displayed for the user and  the key fact is compared to the user input.  All text is converted to lower case for the compare so capitalization doesn't matter, but spelling does. The results are then displayed on the screen with the correct answer and the next question.
+In the Cloze format the flashcard is entered with a statement of fact (front) and the key fact from the statement (back). The user is limited to inputing a maximum of 128 characters for the question (front) and 50 characters (back) for the answer.  There is a counter on the right side of the input box to let the user know how many chacters are left.  Before the information is stored in the database the server adds a third column of cloze to the dataset.  The cloze format is created by replacing the key fact with "..." . During gameplay the cloze statement is displayed for the user and  the key fact is compared to the user input.  All text is converted to lower case for the compare so capitalization doesn't matter, but spelling does. The results are then displayed on the screen with the correct answer and the next question.
 
 At the end of the game a sumary is displayed with more stats and a nice job or a recommendation to play again depending on the final score.
 
