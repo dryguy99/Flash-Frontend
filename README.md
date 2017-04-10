@@ -1,7 +1,7 @@
 # Flash-Frontend
-The front web app is designed as a front end for my server to make and play with flashcards.
+The Flash-Frontend web app is designed as a front end to access my api server for the purpose of making and playing with flashcards.
 
-This app uses my api on a server I created using Node.js at https://immense-reaches-83300.herokuapp.com/ .
+This app uses my api on a server I created using Node.js at https://immense-reaches-83300.herokuapp.com/ .  Without the api the app will not function.
 
 The purpose of this app is to create and use flashcards.  Currently it only holds one set of cards on the topic US History.  I plan to add the ability to add more topics for flashcards in the future.  The user may add their own cards to the database in either a 'basic' format or a 'cloze' format. 
 
