@@ -36,7 +36,9 @@ function runGame() {
 	$('#choices').css('display', 'none');
 	$('.mygame').css('display', 'block');
 	var x = randomNum();
-	if (mydeck.length <= mygameTemp.length) {
+	if (mydeck.length >= mygameTemp.length) {
+		runendGame();
+	} else {
 		while (mydeck.indexOf(x) != -1) {
 			x = randomNum();
 		}
@@ -47,9 +49,7 @@ function runGame() {
 				
 		} else {
 			$('#playgame').html("<h3 class='game text-centered'>" + mygameTemp[x].front + "</h3>");
-		} 
-	} else {
-		runendGame();
+		}
 	}
 }
 //------------------------------------------------------------
