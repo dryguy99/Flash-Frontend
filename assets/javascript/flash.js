@@ -16,7 +16,7 @@ $('#game').css("display", "none");
 function runendGame () {
 	$('#answers').css('display', 'none');
 	$('#playgame').html("<h3 class='text-centered endsaying1'>You've played all the cards!<br><span id='purple'>Choose a Play button Above</span><br><span id='brown'>OR RESET Below to go back to the machine.</span></h3>");
-	var percentR = Math.round(wincount / losscount * 100); // find correct answer percentage & set sayings
+	var percentR = Math.round(wincount / mygameTemp.length * 100); // find correct answer percentage & set sayings
 		if (percentR > 85) {
 				var endsaying = "FABULOUS!<br>You know your US History!!!";
 			}
