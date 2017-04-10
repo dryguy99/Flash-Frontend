@@ -205,7 +205,7 @@ function checkAnswer(answer) {
 	var check = answer.toLowerCase();
 	clearAnswer();
 	var theAnswer = mygameTemp[mydeck[mydeck.length-1]].back.toLowerCase();
-	if (theAnswer === check) {
+	if (theAnswer === check || theAnswer.includes(check)) {
 		mySuccess();
 	} else { myFail(); }
 }
