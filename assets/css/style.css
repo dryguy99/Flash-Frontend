@@ -146,3 +146,27 @@ button.mygame {
 	display: none;
 	color: #002db3;
 }
+.endsaying {
+	font-family: 'Sintony', sans-serif;
+	color: #e65c00;
+	font-size: 2vw;
+	font-weight: 800;
+}
+.endsaying1 {
+	font-family: 'Sintony', sans-serif;
+	color: #008000;
+	font-size: 2vw;
+	font-weight: 800;
+}
+#purple {
+	font-family: 'Sintony', sans-serif;
+	color: #5c00e6;
+	font-size: 2vw;
+	font-weight: 800;
+}
+#brown {
+	font-family: 'Sintony', sans-serif;
+	color: #994d00;
+	font-size: 2vw;
+	font-weight: 800;
+}
